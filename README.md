@@ -6,6 +6,11 @@ Il faut déjà 4 notes sur Pronote, si c'est pas le cas modifiez le code a votre
 
 Enregistre les logins et les anciennes notes, dès que le script est lancé il récupère toutes les 2 minutes les infos de pronote.
 
+# Modules bruts nécessaires : 
+- Dryscrape
+- Bs4 
+- getpass
+
 # ToDo : 
 - Ajouter un son quand une nouvelle note est trouvée 
 - Demander le lien du serveur au premier démarrage 
