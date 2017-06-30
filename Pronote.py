@@ -72,10 +72,10 @@ while 1:
 
 # PARSING #
  soup = bs4.BeautifulSoup(sess.body(), "lxml")
- Note1 = soup.find('div', id="GInterface.Instances[1]_notes_0")
- Note2 = soup.find('div', id="GInterface.Instances[1]_notes_1")
- Note3 = soup.find('div', id="GInterface.Instances[1]_notes_2")
- Note4 = soup.find('div', id="GInterface.Instances[1]_notes_3") 
+ Note1 = soup.find('div', id="GInterface.Instances[1]_notes_0")  
+ Note2 = soup.find('div', id="GInterface.Instances[1]_notes_1")  #SUPPRIMER CETTE LIGNE SI VOUS N'AVEZ PAS ENCORE 2 NOTES !
+ Note3 = soup.find('div', id="GInterface.Instances[1]_notes_2")  #SUPPRIMER CETTE LIGNE SI VOUS N'AVEZ PAS ENCORE 3 NOTES !
+ Note4 = soup.find('div', id="GInterface.Instances[1]_notes_3")  #SUPPRIMER CETTE LIGNE SI VOUS N'AVEZ PAS ENCORE 4 NOTES !
 
 
 # PARTIE TRAITEMENT #
