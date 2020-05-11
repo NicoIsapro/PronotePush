@@ -24,6 +24,7 @@ if os.path.isfile(bdd): # Si fichier présent
  d = shelve.open(bdd)
  username = d['username']
  password = d['password']
+ pronote_url = d['pronote_url']
  sg.popup("Pronote Push Service V1.0 - Lycée Louis Vincent", "Compte enregistré : " + username)
  print ()
  d.close()
@@ -31,11 +32,13 @@ if os.path.isfile(bdd): # Si fichier présent
 else:    # Sinon, on demande les identifiants 
  username = sg.popup_get_text("Pronote Push Service V1.0 - Lycée Louis Vincent", "Nom d'utilisateur : ")
  password = sg.popup_get_text("Pronote Push Service V1.0 - Lycée Louis Vincent", "Mot de passe : ", password_char="*")
+ pronote_url = sg.popup_get_text("Pronote Push Service V1.0 - Lycée Louis Vincent", "Url de pronote pour votre établisement : ")
 
 # On sauvegarde tout ça 
  d = shelve.open(bdd)
  d['username'] = username
  d['password'] = password
+ d['pronote_url'] = pronote_url
  d.close()
  sg.popup("Pronote Push Service V1.0 - Lycée Louis Vincent", "Compte créé avec succès !")
  # PARTIE LOGIN PLACE #
@@ -59,7 +62,7 @@ while 1:
  sess.set_attribute('javascript_can_open_windows', True)
 
 # PARTIE PRONOTE #
- sess.visit('https://0570058d.index-education.net/pronote/')          #MODIFIER AVEC VOTRE LIEN PRONOTE
+ sess.visit(pronote_url)
  time.sleep(4)  # Ne pas modifier cette ligne
 
 
