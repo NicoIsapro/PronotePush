@@ -1,6 +1,6 @@
 #Pronote Push Service 1.0
-# Developpe par Nico Isapro
-# Interface DOS pour python 3
+# Developpe par Nico Isapro, Interface graphique par firelop_vido
+# Interface Graphique et dos pour python 3
 # Lire le fichier readme
 
 import sys
@@ -10,18 +10,11 @@ import dryscrape
 import shelve
 import getpass
 import bs4
+import PySimpleGUI as sg
 
-print ("")  
-print ("  _   _   _                    ___                                      ")                                                                                       
-print (" | \ | | (_)   ___    ___     |_ _|  ___    __ _   _ __    _ __    ___  ")                                                                                            
-print (" |  \| | | |  / __|  / _ \     | |  / __|  / _` | | '_ \  | '__|  / _ \ ")                                                                                            
-print (" | |\  | | | | (__  | (_) |    | |  \__ \ | (_| | | |_) | | |    | (_) |")                                                                                            
-print (" |_| \_| |_|  \___|  \___/    |___| |___/  \__,_| | .__/  |_|     \___/")   
-print ("                                                  |_|                  ") 
-print ("")  
-print ("              Pronote Push Service V1.0 - Lycée Louis Vincent                  ")     
-print ("")          
- 
+
+         
+sg.popup("Pronote Push Service V1.0 - Lycée Louis Vincent", "Nico Isapro")
  # PARTIE IDENTIFIANTS ETC 
 
 bdd = "login.dat"
@@ -31,20 +24,23 @@ if os.path.isfile(bdd): # Si fichier présent
  d = shelve.open(bdd)
  username = d['username']
  password = d['password']
- print ("Compte enregistré : ", username)
+ pronote_url = d['pronote_url']
+ sg.popup("Pronote Push Service V1.0 - Lycée Louis Vincent", "Compte enregistré : " + username)
  print ()
  d.close()
 
 else:    # Sinon, on demande les identifiants 
- username = input("Nom d'utilisateur Place : ")
- password = getpass.getpass("Mot de passe (non affiché par sécurité) :")
- print()
+ username = sg.popup_get_text("Pronote Push Service V1.0 - Lycée Louis Vincent", "Nom d'utilisateur : ")
+ password = sg.popup_get_text("Pronote Push Service V1.0 - Lycée Louis Vincent", "Mot de passe : ", password_char="*")
+ pronote_url = sg.popup_get_text("Pronote Push Service V1.0 - Lycée Louis Vincent", "Url de pronote pour votre établisement : ")
+
 # On sauvegarde tout ça 
  d = shelve.open(bdd)
  d['username'] = username
  d['password'] = password
+ d['pronote_url'] = pronote_url
  d.close()
- 
+ sg.popup("Pronote Push Service V1.0 - Lycée Louis Vincent", "Compte créé avec succès !")
  # PARTIE LOGIN PLACE #
 while 1:
  sess = dryscrape.Session(base_url = 'https://www.ent-place.fr/CookieAuth.dll?GetLogon?curl=Z2F&reason=0&formdir=5') #MODIFIER AVEC VOTRE ENT SI BESOIN
@@ -66,7 +62,7 @@ while 1:
  sess.set_attribute('javascript_can_open_windows', True)
 
 # PARTIE PRONOTE #
- sess.visit('https://0570058d.index-education.net/pronote/')          #MODIFIER AVEC VOTRE LIEN PRONOTE
+ sess.visit(pronote_url)
  time.sleep(4)  # Ne pas modifier cette ligne
 
 
@@ -87,19 +83,16 @@ while 1:
   PNote4 = d['ANote4']
   d.close()
   if PNote1 != Note1.get('aria-label'):   # A OPTIMISER...
-   print ("Nouvelle note !")
-   print (Note1.get('arial-label'))
+   sg.SystemTray.notify('Nouvelle note !', Note1.get('aria-label'))
+   
   elif PNote2 != Note2.get('aria-label'):
-   print ("Nouvelle note !")
-   print (Note2.get('aria-label'))
+   sg.SystemTray.notify('Nouvelle note !', Note2.get('aria-label'))
+   
   elif PNote3 != Note3.get('aria-label'):
-   print ("Nouvelle note !") 
-   print (Note3.get('aria-label'))
+   sg.SystemTray.notify('Nouvelle note !', Note3.get('aria-label'))
+   
   elif PNote4 != Note4.get('aria-label'):
-   print ("Nouvelle note !")
-   print (Note4.get('aria-label'))
-  else:  
-   print ("Pas de nouvelles notes") 
+   sg.SystemTray.notify('Nouvelle note !', Note4.get('aria-label'))
 
  else:   # Sinon on enregistre et on print tout ça 
   d = shelve.open(bdn)
@@ -108,11 +101,8 @@ while 1:
   d['ANote3'] = Note3.get('aria-label')
   d['ANote4'] = Note4.get('aria-label')
   d.close()
-  print (" Les notes suivantes viennent d'être sauvegardées :")
-  print ()
-  print (Note1.get('aria-label'))
-  print (Note2.get('aria-label'))
-  print (Note3.get('aria-label'))
-  print (Note4.get('aria-label'))
-  print ()
+  
+  sg.popup ("Les notes suivantes viennent d'être sauvegardées : \n{}\n{}\n{}\n{}".format(Note1.get('aria-label'), Note2.get('aria-label'), Note3.get('aria-label'), Note4.get('aria-label')))
+
+
  time.sleep(50)
