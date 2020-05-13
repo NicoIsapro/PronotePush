@@ -10,7 +10,7 @@ Enregistre les logins et les anciennes notes, dès que le script est lancé il r
 - Dryscrape
 - Bs4 
 - getpass
+- PySimpleGui
 
 # ToDo : 
-- Ajouter un son quand une nouvelle note est trouvée 
-- Demander le lien du serveur au premier démarrage 
+- Optimisation 
