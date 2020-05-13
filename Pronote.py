@@ -1,5 +1,5 @@
 #Pronote Push Service 1.0
-# Developpe par Nico Isapro, Interface graphique par firelop_vido
+# Developpe par Nico Isapro, Interface graphique par firelop_video
 # Interface Graphique et dos pour python 3
 # Lire le fichier readme
 
@@ -11,6 +11,7 @@ import shelve
 import getpass
 import bs4
 import PySimpleGUI as sg
+import winsound #Module par défaut de python pour les sons
 
 
          
@@ -84,15 +85,19 @@ while 1:
   d.close()
   if PNote1 != Note1.get('aria-label'):   # A OPTIMISER...
    sg.SystemTray.notify('Nouvelle note !', Note1.get('aria-label'))
+   winsound.PlaySound("notif.wav", winsound.SND_NOWAIT)
    
   elif PNote2 != Note2.get('aria-label'):
    sg.SystemTray.notify('Nouvelle note !', Note2.get('aria-label'))
+   winsound.PlaySound("notif.wav", winsound.SND_NOWAIT)
    
   elif PNote3 != Note3.get('aria-label'):
    sg.SystemTray.notify('Nouvelle note !', Note3.get('aria-label'))
+   winsound.PlaySound("notif.wav", winsound.SND_NOWAIT)
    
   elif PNote4 != Note4.get('aria-label'):
    sg.SystemTray.notify('Nouvelle note !', Note4.get('aria-label'))
+   winsound.PlaySound("notif.wav", winsound.SND_NOWAIT)
 
  else:   # Sinon on enregistre et on print tout ça 
   d = shelve.open(bdn)
